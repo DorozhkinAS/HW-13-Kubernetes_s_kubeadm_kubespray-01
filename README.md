@@ -24,7 +24,113 @@
 
 ### Ответ №1
 
-- Подготовим сети и виртуальные машины для выполнения задания в YC ([скрипты тут](src))
+- Подготовим сети и виртуальные машины для выполнения задания в YC
+  
+скрипт: hosts.yaml
+
+```
+all:
+  hosts:
+    worker1:
+      ansible_host: 10.10.10.4
+      ip: 10.10.10.4
+      access_ip: 10.10.10.4
+      ansible_user: yc-user
+    master:
+      ansible_host: 10.10.10.8
+      ip: 10.10.10.8
+      access_ip: 10.10.10.8
+      ansible_user: yc-user
+    worker2:
+      ansible_host: 10.10.10.19
+      ip: 10.10.10.19
+      access_ip: 10.10.10.19
+      ansible_user: yc-user
+    worker4:
+      ansible_host: 10.10.10.21
+      ip: 10.10.10.21
+      access_ip: 10.10.10.21
+      ansible_user: yc-user
+    worker3:
+      ansible_host: 10.10.10.31
+      ip: 10.10.10.31
+      access_ip: 10.10.10.31
+      ansible_user: yc-user
+  children:
+    kube_control_plane:
+      hosts:
+        master:
+    kube_node:
+      hosts:
+        worker1:
+        worker2:
+        worker3:
+        worker4:
+    etcd:
+      hosts:
+        master:
+    k8s_cluster:
+      children:
+        kube_control_plane:
+        kube_node:
+    calico_rr:
+      hosts: {}
+```
+скрипт: yc_create_net.sh
+
+```
+#!/bin/bash
+
+yc vpc network create --name net --labels my-label=netology --description "net" && yc vpc subnet create --name my-subnet --zone ru-central1-c --range 10.10.10.0/24 --network-name net --description "subnet"
+```
+скрипт: yc_create_vm.sh
+
+```
+#!/bin/bash
+
+set -e
+
+function create_vm {
+  local NAME=$1
+
+  YC=$(cat <<END
+    yc compute instance create \
+      --name $NAME \
+      --hostname $NAME \
+      --zone ru-central1-c \
+      --network-interface subnet-name=my-subnet,nat-ip-version=ipv4 \
+      --memory 2 \
+      --cores 2 \
+      --create-boot-disk image-folder-id=standard-images,image-family=ubuntu-2004-lts,type=network-ssd,size=20 \
+      --ssh-key ~/.ssh/id_rsa.pub
+END
+)
+#  echo "$YC"
+  eval "$YC"
+}
+
+create_vm "master"
+create_vm "worker1"
+create_vm "worker2"
+create_vm "worker3"
+create_vm "worker4"
+```
+
+скрипт: yc_delete_vm_net.sh
+
+```
+#!/bin/bash
+
+set -e
+
+function delete_vm {
+  local NAME=$1
+  $(yc compute instance delete --name="$NAME")
+}
+
+delete_vm "master" && delete_vm "worker1" && delete_vm "worker2" && delete_vm "worker3" && delete_vm "worker4" && yc vpc subnet delete --name my-subnet && yc vpc network delete --name net
+```
+
 
 ```shell
 ubuntu@ud:~/hw14.2$ ./yc_create_net.sh 
