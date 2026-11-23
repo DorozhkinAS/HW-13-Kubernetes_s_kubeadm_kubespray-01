@@ -129,6 +129,7 @@ function delete_vm {
 }
 
 delete_vm "master" && delete_vm "worker1" && delete_vm "worker2" && delete_vm "worker3" && delete_vm "worker4" && yc vpc subnet delete --name my-subnet && yc vpc network delete --name net
+
 ```
 
 
@@ -206,7 +207,7 @@ placement_policy: {}
 
 ```
 
-![.](img/img_1.jpg)
+<img width="1083" height="385" alt="image" src="https://github.com/user-attachments/assets/70f8013c-e39a-4069-b456-21028fd2e137" />
 
 - Подключимся к "master" и скачаем `kubespray` из репозитория
 
@@ -245,7 +246,7 @@ Collecting ansible-core==2.12.5
 Successfully installed MarkupSafe-1.1.1 ansible-5.7.1 ansible-core-2.12.5 cryptography-3.4.8 jinja2-2.11.3 jmespath-0.9.5 packaging-23.1 pbr-5.4.4 resolvelib-0.5.4 ruamel.yaml-0.16.10 ruamel.yaml.clib-0.2.7
 ```
 
-- Подготовим файл [hosts.yaml](src/hosts.yaml) и подправим его под нашу задачу
+- Подготовим файл hosts.yaml и подправим его под нашу задачу
 
 ```shell
 yc-user@master:~/kubespray$ declare -a IPS=(10.10.10.4 10.10.10.8 10.10.10.19 10.10.10.21 10.10.10.31)
@@ -373,9 +374,7 @@ ubuntu@ud:~/hw14.2$ ./yc_delete_vm_net.sh
 
 ```
 
-## Доработка
-
-- обновил python до версии 3.9, т.к. с 3.8 не устанавливались зависимости кубеспрея
+P.S. Был установлен python версии 3.9, для корректной работы зависимостей.
 
 ```shell
 PLAY RECAP *******************************************************************************************************************
