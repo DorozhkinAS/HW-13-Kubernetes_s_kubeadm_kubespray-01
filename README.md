@@ -1,4 +1,4 @@
-# Домашнее задание к занятию «Установка Kubernetes»
+# Домашнее задание к занятию «Установка Kubernetes с помощью kubeadm, kubespray» - Дорожкин Артем
 
 ### Цель задания
 
@@ -30,7 +30,7 @@
 ubuntu@ud:~/hw14.2$ ./yc_create_net.sh 
 id: enp5h1qeb4adh54a4hao
 folder_id: b1ghuk1b7h050bht7vcu
-created_at: "2023-09-20T21:58:17Z"
+created_at: "2026-11-21T21:58:17Z"
 name: net
 description: net
 labels:
@@ -39,7 +39,7 @@ default_security_group_id: enpr4sikiar25fm5rlnv
 
 id: b0ce90o0ht34hi1613ic
 folder_id: b1ghuk1b7h050bht7vcu
-created_at: "2023-09-20T21:58:18Z"
+created_at: "2026-11-21T21:58:18Z"
 name: my-subnet
 description: subnet
 network_id: enp5h1qeb4adh54a4hao
@@ -53,7 +53,7 @@ ubuntu@ud:~/hw14.2$ ./yc_create_vm.sh
 done (39s)
 id: ef3jgq77b9slurnr7a0f
 folder_id: b1ghuk1b7h050bht7vcu
-created_at: "2023-09-20T21:59:10Z"
+created_at: "2026-11-21T21:59:10Z"
 name: master
 zone_id: ru-central1-c
 platform_id: standard-v2
@@ -206,7 +206,7 @@ Using /home/yc-user/kubespray/ansible.cfg as config file
 [WARNING]: Skipping callback plugin 'ara_default', unable to load
 
 PLAY [localhost] *******************************************************************************************************************
-Thursday 21 September 2023  00:28:39 +0000 (0:00:00.016)       0:00:00.016 **** 
+Saturday 21 November 2026  00:28:39 +0000 (0:00:00.016)       0:00:00.016 **** 
 
 TASK [Check 2.11.0 <= Ansible version < 2.13.0] ************************************************************************************
 ok: [localhost] => {
@@ -224,7 +224,7 @@ worker2                    : ok=506  changed=92   unreachable=0    failed=0    s
 worker3                    : ok=506  changed=92   unreachable=0    failed=0    skipped=779  rescued=0    ignored=1   
 worker4                    : ok=506  changed=92   unreachable=0    failed=0    skipped=779  rescued=0    ignored=1   
 
-Thursday 21 September 2023  00:48:11 +0000 (0:00:00.134)       0:19:32.643 **** 
+Saturday 21 November 2026  00:48:11 +0000 (0:00:00.134)       0:19:32.643 **** 
 =============================================================================== 
 network_plugin/calico : Wait for calico kubeconfig to be created ----------------------------------------------------------- 46.95s
 download : download_container | Download image if required ----------------------------------------------------------------- 44.59s
@@ -280,7 +280,7 @@ worker2                    : ok=514  changed=93   unreachable=0    failed=0    s
 worker3                    : ok=514  changed=93   unreachable=0    failed=0    skipped=779  rescued=0    ignored=1   
 worker4                    : ok=514  changed=93   unreachable=0    failed=0    skipped=779  rescued=0    ignored=1   
 
-Friday 22 September 2023  21:41:25 +0000 (0:00:00.254)       0:22:06.817 ****** 
+Saturday 21 November 2026  21:41:25 +0000 (0:00:00.254)       0:22:06.817 ****** 
 =============================================================================== 
 download : Download_file | Download item ----------------------------------------------------------------------------- 65.78s
 download : Download_container | Download image if required ----------------------------------------------------------- 34.56s
@@ -310,20 +310,3 @@ worker2   Ready    <none>          3m20s   v1.28.2
 worker3   Ready    <none>          3m19s   v1.28.2
 worker4   Ready    <none>          3m19s   v1.28.2
 ```
-
-## Дополнительные задания (со звёздочкой)
-
-**Настоятельно рекомендуем выполнять все задания под звёздочкой.** Их выполнение поможет глубже разобраться в материале.
-Задания под звёздочкой необязательные к выполнению и не повлияют на получение зачёта по этому домашнему заданию.
-
-### Задание 2*. Установить HA кластер
-
-1. Установить кластер в режиме HA.
-2. Использовать нечётное количество Master-node.
-3. Для cluster ip использовать keepalived или другой способ.
-
-### Правила приёма работы
-
-1. Домашняя работа оформляется в своем Git-репозитории в файле README.md. Выполненное домашнее задание пришлите ссылкой на .md-файл в вашем репозитории.
-2. Файл README.md должен содержать скриншоты вывода необходимых команд `kubectl get nodes`, а также скриншоты результатов.
-3. Репозиторий должен содержать тексты манифестов или ссылки на них в файле README.md.
